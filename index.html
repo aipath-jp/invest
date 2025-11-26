@@ -34,6 +34,16 @@
                 line-height: 1.2;
             }
         }
+        /* スキルタグの初期スタイルを修正 */
+        .skill-tag {
+            background-color: transparent;
+            color: #93c5fd; /* blue-300 */
+            border-color: #60a5fa; /* blue-400 */
+        }
+        .skill-tag.selected {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -232,9 +242,7 @@
         </div>
     </section>
     
-    <!-- Section 3: Diagnostic Simulator -->
     <section id="simulation" class="py-20 bg-blue-900 text-white relative overflow-hidden">
-        <!-- Decoration -->
         <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-700 rounded-full opacity-20 blur-3xl"></div>
         <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-indigo-600 rounded-full opacity-20 blur-3xl"></div>
 
@@ -248,10 +256,9 @@
 
             <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Inputs -->
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-sm font-medium text-blue-100 mb-2">1週間の確保可能時間</label>
+                            <label for="sim-hours" class="block text-sm font-medium text-blue-100 mb-2">1週間の確保可能時間</label>
                             <select id="sim-hours" class="w-full bg-blue-800/50 border border-blue-500 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="5">週5時間 (副業・多忙)</option>
                                 <option value="15" selected>週15時間 (週末・平日夜)</option>
@@ -259,7 +266,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-blue-100 mb-2">初期投資予算</label>
+                            <label for="sim-budget" class="block text-sm font-medium text-blue-100 mb-2">初期投資予算</label>
                             <select id="sim-budget" class="w-full bg-blue-800/50 border border-blue-500 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="0">0円 (完全無料ツールのみ)</option>
                                 <option value="10000" selected>10万円 (主要AIツール課金)</option>
@@ -269,14 +276,13 @@
                         <div>
                             <label class="block text-sm font-medium text-blue-100 mb-2">保有スキル</label>
                             <div class="flex flex-wrap gap-2">
-                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-sm hover:bg-blue-600 transition-colors" data-score="10">営業経験</button>
-                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-sm hover:bg-blue-600 transition-colors" data-score="15">専門知識あり</button>
-                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-sm hover:bg-blue-600 transition-colors" data-score="5">PC基本操作</button>
+                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-blue-200 text-sm hover:bg-blue-600 hover:text-white transition-colors" data-score="10">営業経験</button>
+                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-blue-200 text-sm hover:bg-blue-600 hover:text-white transition-colors" data-score="15">専門知識あり</button>
+                                <button class="skill-tag px-3 py-1 rounded-full border border-blue-400 text-blue-200 text-sm hover:bg-blue-600 hover:text-white transition-colors" data-score="5">PC基本操作</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Result Display -->
                     <div class="flex flex-col justify-center items-center text-center border-t md:border-t-0 md:border-l border-blue-500/30 pt-6 md:pt-0 md:pl-6">
                         <p class="text-blue-200 text-sm uppercase tracking-widest font-bold">Estimated Launch</p>
                         <div class="text-5xl font-extrabold text-white mt-2 mb-2" id="sim-result-days">
@@ -330,7 +336,6 @@
         </div>
     </section>
     
-    
 
     <section id="contact" class="py-12 bg-gradient-to-t from-black to-blue-900 text-white text-center">
         <div class="container mx-auto px-4 max-w-lg">
@@ -372,6 +377,110 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
+
+        // AI起業ポテンシャル診断シミュレーターロジック
+        function updateSimulation() {
+            // 1. 各要素の値を取得
+            const hoursElement = document.getElementById('sim-hours');
+            const budgetElement = document.getElementById('sim-budget');
+            const skillTags = document.querySelectorAll('.skill-tag.bg-blue-600'); // 選択されたスキルタグ
+            
+            const resultDaysElement = document.getElementById('sim-result-days');
+            const simBarElement = document.getElementById('sim-bar');
+            const simCommentElement = document.getElementById('sim-comment');
+
+            // 2. 基本日数と補正値を設定
+            let baseDays = 90; // 基本のマネタイズ開始目標日数
+            const hoursValue = parseInt(hoursElement.value);
+            const budgetValue = parseInt(budgetElement.value);
+            let skillScore = 0;
+
+            // 3. スコアリング
+            
+            // 確保時間による減算 (時間が長いほど日数を短縮)
+            // 週5時間 (5) => -0日 (基準)
+            // 週15時間 (15) => -30日
+            // 週40時間 (40) => -50日
+            if (hoursValue === 15) {
+                baseDays -= 30;
+            } else if (hoursValue === 40) {
+                baseDays -= 50;
+            }
+            
+            // 予算による減算 (予算が多いほど日数を短縮)
+            // 0円 => -0日 (基準)
+            // 10万円 (10000) => -15日
+            // 100万円以上 (100000) => -30日
+            if (budgetValue === 10000) {
+                baseDays -= 15;
+            } else if (budgetValue === 100000) {
+                baseDays -= 30;
+            }
+            
+            // スキルによる減算
+            skillTags.forEach(tag => {
+                skillScore += parseInt(tag.dataset.score);
+            });
+            baseDays -= skillScore; // 各スキルのスコア分、日数を短縮
+
+            // 4. 結果の調整と表示
+            let finalDays = Math.max(7, baseDays); // 最小日数は7日
+            
+            // 結果のコメントとプログレスバーの割合を決定
+            let comment = "初期段階です。AIの力で短縮を目指しましょう";
+            let barWidth = 30;
+            
+            if (finalDays <= 30) {
+                comment = "超高速スタート！最短ルートで収益化が見込めます";
+                barWidth = 90;
+            } else if (finalDays <= 60) {
+                comment = "標準的なスピードです。AIツール活用で目標達成可能です";
+                barWidth = 70;
+            } else if (finalDays <= 90) {
+                comment = "慎重なスタートですが、確実にステップを踏めます";
+                barWidth = 50;
+            }
+
+            // 5. DOMを更新
+            resultDaysElement.innerHTML = `${finalDays}<span class="text-2xl font-normal">日</span>`;
+            simBarElement.style.width = `${barWidth}%`;
+            simCommentElement.textContent = comment;
+        }
+
+        // 6. イベントリスナーを設定
+        document.addEventListener('DOMContentLoaded', () => {
+            // セレクトボックスの変更を監視
+            document.getElementById('sim-hours').addEventListener('change', updateSimulation);
+            document.getElementById('sim-budget').addEventListener('change', updateSimulation);
+
+            // スキルタグのクリックを監視
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                // 初回ロード時に選択状態を解除 (初期値は選択なし)
+                tag.classList.remove('bg-blue-600', 'text-white');
+                tag.classList.add('text-blue-200', 'hover:bg-blue-600', 'hover:text-white');
+                
+                tag.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    // 選択状態をトグルし、色を切り替える
+                    tag.classList.toggle('bg-blue-600');
+                    tag.classList.toggle('text-white');
+                    tag.classList.toggle('text-blue-200'); // 非選択時の色
+                    
+                    // ホバー効果のために、トグル時にhoverクラスはそのままにするか、再設定する
+                    if(tag.classList.contains('bg-blue-600')) {
+                         tag.classList.remove('hover:bg-blue-600', 'hover:text-white');
+                    } else {
+                         tag.classList.add('hover:bg-blue-600', 'hover:text-white');
+                    }
+                    
+                    // 再計算
+                    updateSimulation();
+                });
+            });
+
+            // 初回ロード時の実行
+            updateSimulation();
+        });
     </script>
 
 </body>

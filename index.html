@@ -3,128 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIが導き出す 次世代の投資戦略 | LP</title>
+    <title>AI起業フルパッケージ - 株式会社Aipath</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* カスタムフォント設定 (日本語にも対応したサンセリフ体) */
         body {
-            font-family: 'Inter', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
         }
-        /* iframeのレスポンシブコンテナ */
-        .iframe-container {
+        /* グラデーションテキスト */
+        .text-gradient {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* 画像プレースホルダーのスタイル */
+        .img-placeholder {
+            background-color: #e2e8f0;
+            border: 2px dashed #94a3b8;
+            color: #475569;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
             position: relative;
-            width: 100%;
-            padding-bottom: 64.28%; /* 700px(width) / 450px(height) のアスペクト比 450/700 * 100% ≈ 64.28% */
-            height: 0;
             overflow: hidden;
-            max-width: 700px; /* 元の幅に合わせて最大幅を設定 */
-            margin-left: auto;
-            margin-right: auto;
         }
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .img-placeholder:hover {
+            background-color: #cbd5e1;
+            border-color: #64748b;
+        }
+        .prompt-box {
+            background: #1e293b;
+            color: #00ff9d;
+            font-family: monospace;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
             width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            text-align: left;
+            word-break: break-all;
         }
     </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#007bff', /* 青系のキーカラー */
-                        'secondary': '#6c757d', /* グレー系のサブカラー */
-                        'accent': '#17a2b8', /* シアン系のアクセントカラー */
-                    },
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <header class="py-4 bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-xl font-bold text-accent">株式会社Gen AI Presents : AI投資データ分析</h1>
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-bold text-blue-900">Aipath</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-bold text-gray-600">
+                <a href="#problem" class="hover:text-blue-600 transition">課題</a>
+                <a href="#solution" class="hover:text-blue-600 transition">解決策</a>
+                <a href="#curriculum" class="hover:text-blue-600 transition">カリキュラム</a>
+                <a href="#price" class="hover:text-blue-600 transition">料金</a>
+            </nav>
+            <a href="#contact" class="hidden md:inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition shadow-lg transform hover:-translate-y-0.5">
+                無料相談へ
+            </a>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-600" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 space-y-4">
+            <a href="#problem" class="block text-gray-600">課題</a>
+            <a href="#solution" class="block text-gray-600">解決策</a>
+            <a href="#curriculum" class="block text-gray-600">カリキュラム</a>
+            <a href="#contact" class="block bg-orange-500 text-white text-center py-2 rounded">無料相談へ</a>
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-12 sm:py-20 flex flex-col items-center">
+    <!-- 1. ファーストビュー (FV) -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-gray-900 to-blue-900 text-white">
         
-        <section class="text-center mb-10">
-            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
-                面倒な情報収集、<br>感情に基づいた非効率なトレードに<span class="text-primary"><br>さよならを。</span>
+        <!-- 背景画像エリア -->
+        <div class="absolute inset-0 z-0 opacity-40">
+            <div class="img-placeholder h-full w-full">
+                <div class="text-lg font-bold"><img src="https://iili.io/fqesoQa.png" alt="Gemini Generated Image uf6965uf6965uf69" border="0"></div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+                在庫・人件費・初期投資<span class="text-orange-400">ゼロ</span>。<br>AI起業を<span class="bg-yellow-300 text-gray-900 px-2 py-0.5 rounded-md">最短30日で収益化<br class="md:hidden">
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                リスクを極限まで抑えた、Aipathが提供する新時代の起業術。<br>
+                AipathのノウハウがあなたのCo-Founderになります。
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#contact" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-full shadow-2xl transition transform hover:scale-105">
+                    【限定無料】AI起業ロードマップを受け取る
+                </a>
+            </div>
+            <p class="mt-4 text-sm text-gray-400">※ 説明会・個別相談の受付はこちら</p>
+        </div>
+    </section>
+
+    <!-- 2. 問題提起と共感 -->
+    <section id="problem" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    あなたはまだ、<br class="md:hidden"><span class="text-red-600 border-b-4 border-red-600">旧時代のやり方</span>で消耗していませんか？
+                </h2>
+                <p class="text-gray-600">従来の起業につきまとう、3つの大きな壁。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <!-- Pain Point 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+                        <div class="bg-red-100 text-red-500 p-3 rounded-full mr-4 shrink-0">
+                            <i class="fas fa-money-bill-wave text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">多額の初期投資と在庫リスク</h3>
+                            <p class="text-gray-600 text-sm">融資を受けて商品を仕入れても、売れる保証はない。在庫の山を見るたびに不安になる毎日。</p>
+                        </div>
+                    </div>
+                    <!-- Pain Point 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+                        <div class="bg-red-100 text-red-500 p-3 rounded-full mr-4 shrink-0">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">重くのしかかる人件費</h3>
+                            <p class="text-gray-600 text-sm">開発、デザイン、ライティング。外注すればコストは青天井。自分一人では限界がある。</p>
+                        </div>
+                    </div>
+                    <!-- Pain Point 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+                        <div class="bg-red-100 text-red-500 p-3 rounded-full mr-4 shrink-0">
+                            <i class="fas fa-hourglass-half text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2">長すぎるマネタイズまでの道のり</h3>
+                            <p class="text-gray-600 text-sm">アイデアはあるのに、形にするまで半年・1年とかかり、その間に市場が変わってしまう。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 画像エリア: 悩む人 -->
+                <div class="relative h-80 md:h-full min-h-[400px] rounded-2xl overflow-hidden shadow-xl">
+                    <div class="img-placeholder h-full w-full bg-gray-300">
+                        <div class="text-lg font-bold"><img src="https://iili.io/fqkaZps.png" alt="Gemini Generated Image 78utjq78utjq78ut" border="0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ソリューション紹介 -->
+    <section id="solution" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- 画像エリア: AIによる解決 -->
+                <div class="order-2 md:order-1 relative h-80 md:h-full min-h-[400px] rounded-2xl overflow-hidden shadow-2xl transform md:-rotate-3 transition hover:rotate-0 duration-500">
+                    <div class="img-placeholder h-full w-full bg-blue-50">
+                        <div class="text-lg font-bold"><img src="https://iili.io/fqkE5UN.png" alt="Gemini Generated Image uwfysuuwfysuuwfy" border="0"></div>
+                    </div>
+                </div>
+
+                <div class="order-1 md:order-2">
+                    <h2 class="text-sm font-bold text-blue-600 tracking-widest uppercase mb-2">SOLUTION</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">
+                        「AI起業フルパッケージ」は、<br>
+                        企画から運用までを<span class="text-gradient">完全自動化</span>します。
+                    </h3>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        「AI起業フルパッケージ」は、ただの学習教材ではありません。<br>
+                        企画、開発、マーケティング、そしてバックオフィスに至るまで、AIを徹底活用して起業プロセスを高速化する<strong>「実践型プログラム」</strong>です。
+                    </p>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
+                        <p class="font-bold text-blue-900">
+                            約束する結果：<br>
+                            超ローリスクで、デジタル資産を軸とした高収益ビジネスモデルを構築します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 圧倒的な提供価値と3大アドバンテージ -->
+    <section class="py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">なぜ、Aipathなら成功できるのか？</h2>
+                <p class="text-gray-400">他社にはない、3つの圧倒的アドバンテージ。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Advantage 1 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-orange-500 transition duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">🥇</div>
+                    <h3 class="text-xl font-bold mb-4">超ローコスト起業モデル</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>人件費ゼロ：</strong>AIライター、AIデザイナーを無料で活用</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>在庫ゼロ：</strong>デジタルコンテンツ等、無形資産に特化</span></li>
+                    </ul>
+                </div>
+                <!-- Advantage 2 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-orange-500 transition duration-300 relative transform md:-translate-y-4 shadow-xl">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Most Important</div>
+                    <div class="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">🥈</div>
+                    <h3 class="text-xl font-bold mb-4">ハイスピード・マネタイズ</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>高速MVP開発：</strong>市場分析〜試作を数日で完結</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>最短収益化：</strong>従来の1/10の期間で黒字化を目指す</span></li>
+                    </ul>
+                </div>
+                <!-- Advantage 3 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-orange-500 transition duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">🥉</div>
+                    <h3 class="text-xl font-bold mb-4">高拡張性と自動運用</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>24時間稼働：</strong>AIエージェントが運用を代行</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i> <span><strong>ストック収益：</strong>手離れの良いサブスクモデル構築</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. カリキュラム詳細 -->
+     <section id="curriculum" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-center mb-8">
+                あなたのビジネスを創る<br>4つの実践ステップ
             </h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                常識を覆すデータ収集と分析力、最先端AIによる革新的な株式スコアリング
-            </p>
-        </section>
 
-        <section class="w-full max-w-4xl mb-12">
-            <div class="iframe-container">
-                <iframe 
-                    src="https://gamma.app/embed/jh71mw9d3q4p050" 
-                    allow="fullscreen" 
-                    title="AIが導き出す 次世代の投資戦略">
-                </iframe>
-            </div>
-            <p class="mt-4 text-center text-sm text-gray-500">
+            <div class="max-w-md mx-auto space-y-6">
                 
-            </p>
-        </section>
-
-
-    </main>
-
-    <footer class="bg-gray-800 text-white py-6 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            
-            <div class="mb-4 pt-4 border-t border-gray-600 p-4 bg-gray-900 rounded-lg shadow-2xl">
-                <p class="font-bold text-xl text-red-500 mb-4 border-b-2 border-red-500 pb-2">【重要事項と免責事項】</p>
-                
-                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 mb-4 rounded-md max-w-4xl mx-auto" role="alert">
-                    <p class="font-bold text-lg text-yellow-700">【最重要確認事項】</p>
-                    <p class="text-base font-semibold">
-                        当サービス「AI投資データ分析」は、金融商品取引法に基づく「投資助言・代理業の登録」を一切受けておりません。
-                    </p>
+                <!-- Step 1 -->
+                <div class="relative pl-8 pb-6 border-l-4 border-blue-500">
+                    <div class="absolute -left-4 top-0 w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center font-bold shadow-md">1</div>
+                    <h3 class="text-xl font-bold mb-1 text-blue-800">アイデア選定 & MVP開発</h3>
+                    <p class="text-sm text-gray-700">AIリサーチで競合の穴となるニッチ市場を正確に発掘します。さらに、プロンプトエンジニアリングを用いて、電子書籍や学習コンテンツ、Webサービスなどの試作品（MVP）を**数時間〜数日で即座に作成**し、市場に投入できる状態にします。</p>
                 </div>
 
-                <p class="text-sm font-bold text-white max-w-4xl mx-auto mb-3">
-                     当サービスは、金融商品取引法に定める「投資助言・代理業」に該当する行為を一切行っておりません。
-                </p>
-                <div class="text-xs text-gray-400 max-w-4xl mx-auto space-y-2">
-                    <p class="p-2 bg-gray-700 rounded-md border border-gray-600">
-                        投資助言・推奨の否定: 提供されるAI分析データ、レポート、スコアリングなどは、特定の金融商品の価値等または投資判断について意見を述べるものではありません。特定の有価証券の売買その他の取引を推奨または助言するものでもありません。
-                    </p>
-                    <p class="p-2 bg-gray-700 rounded-md border border-gray-600">
-                        投資の自己責任: 当サービスは、データ解析ツールおよび情報提供に対する対価であり、投資の最終的な決定（売買、保有、継続など）は、必ず利用者ご自身の責任と判断において行ってください。
-                    </p>
-                    <p class="p-2 bg-gray-700 rounded-md border border-gray-600">
-                        運用成績の保証否定: 当サービスの提供する情報に基づいて行った結果、損失が発生した場合であっても、当社は一切の責任を負いません。また、将来の運用成果を保証するものではありません。
-                    </p>
-                    <p class="p-2 bg-gray-700 rounded-md border border-gray-600">
-                        情報の正確性: 当社は情報の正確性・完全性を期しておりますが、その内容を保証するものではありません。
-                    </p>
+                <!-- Step 2 -->
+                <div class="relative pl-8 pb-6 border-l-4 border-blue-500">
+                    <div class="absolute -left-4 top-0 w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center font-bold shadow-md">2</div>
+                    <h3 class="text-xl font-bold mb-1 text-blue-800">マーケティング自動化</h3>
+                    <p class="text-sm text-gray-700">AIによるLP生成、SEO記事、SNS投稿を**パーソナライズされたペルソナ**に基づいて自動で生成し、集客を仕組み化します。顧客対応チャットボットも導入し、見込み客の育成までを自動で行います。</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative pl-8 pb-6 border-l-4 border-blue-500">
+                    <div class="absolute -left-4 top-0 w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center font-bold shadow-md">3</div>
+                    <h3 class="text-xl font-bold mb-1 text-blue-800">バックオフィスゼロ化</h3>
+                    <p class="text-sm text-gray-700">会社設立時の書類作成、契約書レビュー（リーガルAI）、経理処理の自動仕分けなどをAIツール連携で**最小限の労力**に抑えます。これにより、あなたは事業の中核である改善と拡大に集中できます。</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-4 top-0 w-8 h-8 bg-blue-500 rounded-full text-white flex items-center justify-center font-bold shadow-md">4</div>
+                    <h3 class="text-xl font-bold mb-1 text-blue-800">独自AIツール開発 & 拡張</h3>
+                    <p class="text-sm text-gray-700">ZapierやMakeなどのノーコードツールとAPIを組み合わせて、競合には真似できない**あなただけのオリジナルAIツール**を開発します。最新のAI技術（マルチモーダル等）の導入サポートも行い、事業を継続的に拡大させます。</p>
                 </div>
             </div>
-            <p class="mb-2">
-                <a href="#privacy-policy" class="text-gray-400 hover:text-white underline mr-4">プライバシーポリシー</a>
-                <a href="#tokushoho" class="text-gray-400 hover:text-white underline">特定商取引法に基づく表記</a>
-            </p>
             
-            <div id="privacy-policy" class="text-left bg-gray-700 p-4 mt-4 rounded-md">
-                <h4 class="text-sm font-bold mb-2 text-white">プライバシーポリシー（※別途内容を記載してください）</h4>
+        </div>
+    </section>
+
+    <!-- 6. お客様の声・実績 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">AI起業で人生を変えた受講生</h2>
             </div>
-            <div id="tokushoho" class="text-left bg-gray-700 p-4 mt-4 rounded-md">
-                <h4 class="text-sm font-bold mb-2 text-white">特定商取引法に基づく表記（※別途内容を記載してください）</h4>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Case 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <div class="img-placeholder h-full w-full !p-0">
+                                <span class="text-xs">[顔写真]</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">30代 会社員 男性</h4>
+                            <p class="text-blue-600 text-sm">副業開始2ヶ月で月収30万円達成</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">「在庫リスクがないのが一番の決め手でした。AIがリサーチから記事作成までやってくれるので、本業が忙しくても続けられています。」</p>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <div class="img-placeholder h-full w-full !p-0">
+                                <span class="text-xs">[顔写真]</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">40代 主婦 女性</h4>
+                            <p class="text-blue-600 text-sm">デザイン未経験から半年で法人化</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">「デザインなんてやったこともなかった私が、AIツールを使うだけでWeb制作事業を立ち上げられました。今では自分の会社を持っています。」</p>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 7. 料金プランとクロージング -->
+    <section id="contact" class="py-12 bg-gradient-to-t from-black to-blue-900 text-white text-center">
+        <div class="container mx-auto px-4 max-w-lg">
             
-            <p class="mt-4">&copy; 2025 Gen AI Co., Ltd. All Rights Reserved.</p>
+            <div class="bg-white text-gray-800 rounded-xl p-6 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-6 py-1.5 transform rotate-45 translate-x-5 translate-y-3 shadow-md">
+                    限定特典
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-2 mt-4">AI起業を今すぐスタート</h3>
+                <p class="text-gray-600 mb-6 font-medium">まずは【無料】個別相談にご参加ください。</p>
+                
+                <div class="bg-orange-50 border-l-4 border-orange-500 p-4 mb-6 text-left">
+                    <h4 class="font-bold text-orange-800 mb-1 flex items-center"><i class="fas fa-gift mr-2"></i> 参加者限定特典</h4>
+                    <p class="text-sm text-gray-700">「厳選AIツールリスト＆即戦力プロンプト集100選」無料進呈！</p>
+                </div>
+
+                <a href="#" class="inline-block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl py-4 rounded-lg shadow-lg transition transform hover:scale-105">
+                    【無料】相談に申し込む
+                </a>
+                <p class="text-xs text-gray-500 mt-3">※ 無理な勧誘は一切ございません。定員あり。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. フッター -->
+    <footer class="bg-black text-gray-400 py-8 text-sm">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-lg font-bold text-white block mb-4">Aipath</span>
+            <ul class="flex justify-center space-x-4 mb-4">
+                <li><a href="#" class="hover:text-white transition">会社概要</a></li>
+                <li><a href="#" class="hover:text-white transition">プライバシーポリシー</a></li>
+                <li><a href="#" class="hover:text-white transition">特定商取引法</a></li>
+            </ul>
+            <p>&copy; 2025 Aipath Inc.</p>
         </div>
     </footer>
 

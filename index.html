@@ -702,6 +702,73 @@
 
 
     <footer class="bg-black text-gray-400 py-8 text-sm">
+        <div id="tokusho-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75" onclick="toggleModal('tokusho-modal')"></div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="bg-white px-6 py-8">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h3 class="text-2xl font-bold text-gray-900" id="modal-title">特定商取引法に基づく表記</h3>
+                    <button onclick="toggleModal('tokusho-modal')" class="text-gray-400 hover:text-gray-600 transition">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="text-sm text-gray-700 space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                    <table class="w-full border-collapse">
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <th class="py-3 text-left w-1/3 font-bold">販売業者</th>
+                                <td class="py-3">株式会社Aipath</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">運営責任者</th>
+                                <td class="py-3">代表取締役 小橋一元</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">所在地</th>
+                                <td class="py-3">〒541-0042<BR>大阪市中央区今橋1-7-19北浜BLD11F</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">販売価格</th>
+                                <td class="py-3">
+                                    <strong>540,000円（税込 594,000円）</strong><br>
+                                    ※サービス内容により変動がある場合は別途お見積もり
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">商品代金以外の費用</th>
+                                <td class="py-3">銀行振込手数料、インターネット接続費用、及び広告運用時の広告費実費。</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">お支払い方法</th>
+                                <td class="py-3">銀行振込/クレジットカード決済</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">代金の支払時期</th>
+                                <td class="py-3">お申し込み後、弊社指定の期日までにお支払い。</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">役務の提供時期</th>
+                                <td class="py-3">契約締結後、初回コンサルティング日より提供開始。</td>
+                            </tr>
+                            <tr>
+                                <th class="py-3 text-left font-bold">返品・キャンセル</th>
+                                <td class="py-3">提供サービスの性質上、契約確定後のお客様都合による返品・返金は原則としてお受けできません。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end">
+                <button onclick="toggleModal('tokusho-modal')" class="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-bold hover:bg-gray-300 transition">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
 
         <div class="container mx-auto px-4 text-center">
 
@@ -711,7 +778,7 @@
 
                 <li><a href="https://aipathcorp.com/" class="hover:text-white transition">会社概要</a></li>
 
-                <li><a href="#" class="hover:text-white transition">特定商取引法</a></li>
+                <li><a href="javascript:void(0)" onclick="toggleModal('tokusho-modal')" class="hover:text-white transition">特定商取引法</a></li>
 
             </ul>
 
@@ -732,7 +799,23 @@
             menu.classList.toggle('hidden');
 
         }
+　　　　// --- 追加: モーダル開閉の関数 ---
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // 背景スクロール防止
+        } else {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';   // スクロール再開
+        }
+    }
 
+    // 既存の toggleMenu 関数
+    function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
 
 
         // AI起業ポテンシャル診断シミュレーターロジック
